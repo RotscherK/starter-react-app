@@ -1,4 +1,11 @@
 import logo from './logo.svg';
+import React, {useMemo} from 'react';
+import { useTable } from 'react-table';
+import { Table } from 'react-bootstrap';
+import { BsPlus } from 'react-icons/bs';
+import { NavLink } from "react-router-dom";
+import { useTranslation } from 'react-i18next';
+
 import './App.css';
 
 function App() {
