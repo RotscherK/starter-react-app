@@ -1,0 +1,10 @@
+{
+    "app.nav.home": "Home",
+    "app.nav.menus": "Menus",
+    "app.nav.products": "Produkte",
+    "app.nav.weekplanner": "Wochenplan",
+    "app.nav.sandbox": "Sandbox",
+    
+    "app.menu.hintChooseMenu": "Wähle ein Menu aus",
+    "app.product.hintChooseProduct": "Wähle ein Produkt aus"
+  }

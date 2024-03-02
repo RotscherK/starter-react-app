@@ -1,32 +1,75 @@
-import logo from './logo.svg';
-import React, {useMemo} from 'react';
-import { useTable } from 'react-table';
-import { Table } from 'react-bootstrap';
-import { BsPlus } from 'react-icons/bs';
-import { NavLink } from "react-router-dom";
-import { useTranslation } from 'react-i18next';
+import React, { useState, useEffect} from 'react'
+import './styles/App.css';
+import { Routes, Route } from 'react-router-dom';
+import RequireAuth from './components/RequireAuth';
+import {checkLoggedInStatus} from './services/AuthService'
+import Layout from './views/Layout';
+import Login from './views/Login';
+import Register from './views/Register';
+import UserSettings from './views/UserSettings';
+import Home from './views/Home';
+import Menu from './views/Menu';
+import Product from './views/Product';
+import WeekPlanner from './views/WeekPlanner';
+import Sandbox from './views/Sandbox';
 
-import './App.css';
+const App = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(checkLoggedInStatus);
 
-function App() {
+
+  // Run checkLoggedInStatus on initial render
+  useEffect(() => {
+    setIsLoggedIn(checkLoggedInStatus());
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+      <Routes>
+        <Route
+          element={<Layout isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />}
         >
-          Learn React
-        </a>
-      </header>
-    </div>
+          <Route index element={<Home />} />
+          <Route
+            path="/login"
+            element={<Login isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />}
+          />
+          <Route
+            path="/register"
+            element={<Register isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />}
+          />
+          <Route
+            path="/usersettings"
+            element={<RequireAuth isLoggedIn={isLoggedIn}>
+              <UserSettings />
+            </RequireAuth>}
+            isLoggedIn={isLoggedIn}
+          />
+          <Route
+            path="/menu"
+            element={<RequireAuth isLoggedIn={isLoggedIn}>
+              <Menu />
+            </RequireAuth>}
+          />
+          <Route
+            path="/product"
+            element={<RequireAuth isLoggedIn={isLoggedIn}>
+              <Product />
+            </RequireAuth>}
+          />
+          <Route
+            path="/weekplanner"
+            element={<RequireAuth isLoggedIn={isLoggedIn}>
+              <WeekPlanner />
+            </RequireAuth>}
+            isLoggedIn={isLoggedIn}
+          />
+          <Route
+            path="/sandbox"
+            element={<Sandbox />}
+            isLoggedIn={isLoggedIn}
+          />
+        </Route>
+      </Routes>
   );
-}
+};
 
 export default App;
